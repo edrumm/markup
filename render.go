@@ -1,0 +1,5 @@
+package markup
+
+func Blank() {
+
+}
