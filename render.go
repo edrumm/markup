@@ -2,6 +2,6 @@ package markup
 
 import "fmt"
 
-func Render() {
+func (*HTML) Render() {
 	fmt.Println("Under Construction...")
 }
