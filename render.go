@@ -1,5 +1,7 @@
 package markup
 
-func Blank() {
+import "fmt"
 
+func Render() {
+	fmt.Println("Under Construction...")
 }
