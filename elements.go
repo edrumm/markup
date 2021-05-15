@@ -7,12 +7,19 @@ type Node interface {
 }
 
 /*
-	Represents a generic HTML tag with no nested tags eg. title, etc...
+	Represents a basic HTML tag eg. title, etc...
 	TODO - attributes
 */
 type Tag struct {
 	name    string
 	content string
+}
+
+/*
+	Represents a single tag e.g. br, hr, etc...
+*/
+type SingleTag struct {
+	name string
 }
 
 /*
@@ -63,6 +70,14 @@ func (h *HTML) AppendBody(elem Node) {
 
 func NewTag(name, content string) *Tag {
 	return &Tag{name, content}
+}
+
+func (t *SingleTag) Html() string {
+	return fmt.Sprintf("<%s>", t.name)
+}
+
+func NewSingleTag(name string) *SingleTag {
+	return &SingleTag{name}
 }
 
 func (t *Tag) Html() string {
