@@ -38,6 +38,7 @@ type Div struct {
 */
 type HTML struct {
 	name string
+	lang string
 	head []Node
 	body []Node
 
@@ -49,9 +50,9 @@ type HTML struct {
 /*
 	Creates a new html struct, returns *HTML
 */
-func NewHtmlDoc(name, title string) *HTML {
+func NewHtmlDoc(name, lang, title string) *HTML {
 	h := []Node{NewTag("title", title)}
-	return &HTML{name, h, nil}
+	return &HTML{name, lang, h, nil}
 }
 
 /*
@@ -70,6 +71,10 @@ func (h *HTML) AppendBody(elem Node) {
 
 func NewTag(name, content string) *Tag {
 	return &Tag{name, content}
+}
+
+func (h *HTML) Html() string {
+	return fmt.Sprintf("<html lang=\"%s\">", h.lang)
 }
 
 func (t *SingleTag) Html() string {

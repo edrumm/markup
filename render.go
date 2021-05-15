@@ -25,7 +25,7 @@ func (h *HTML) Render() {
 		}
 	}()
 
-	_, err = f.WriteString("<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n")
+	_, err = f.WriteString(fmt.Sprintf("<!DOCTYPE html>\n%s\n<head>\n", h.Html()))
 	errf(err)
 
 	for _, elem := range h.head {
