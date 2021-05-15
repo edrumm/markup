@@ -1,13 +1,13 @@
 package markup
 
-type Declaration struct {
+type Dec struct {
 	property string
 	value    string
 }
 
 type Rule struct {
 	selector     string
-	declarations []*Declaration
+	declarations []*Dec
 }
 
 type Stylesheet struct {
@@ -23,4 +23,15 @@ func NewStylesheet(name string) *Stylesheet {
 	/*
 	   TODO
 	*/
+}
+
+func (css *Stylesheet) AddRule(selector string) *Rule {
+	/*
+		How to link this to Stylesheet...??
+	*/
+	return &Rule{selector, nil}
+}
+
+func (r *Rule) AddDeclaration(prop, value string) {
+	r.declarations = append(r.declarations, &Dec{prop, value})
 }
