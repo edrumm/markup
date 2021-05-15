@@ -1,37 +1,46 @@
 package markup
 
 import (
-	"bufio"
 	"fmt"
 	"os"
 )
+
+func errf(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
 
 /*
 	Renders an html struct to an html file
 */
 func (h *HTML) Render() {
 	f, err := os.Create(h.name)
+	errf(err)
 
-	if err != nil {
-		panic(err)
-	}
+	defer func() {
+		err := f.Close()
+		if err != nil {
+			panic(err)
+		}
+	}()
 
-	defer f.Close()
+	_, err = f.WriteString("<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n")
+	errf(err)
 
-	w := bufio.NewWriter(f)
-
-	w.WriteString("<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n")
 	for _, elem := range h.head {
-		w.WriteString(fmt.Sprintf("%s\n", elem.Html()))
+		_, err = f.WriteString(fmt.Sprintf("%s\n", elem.Html()))
+		errf(err)
 	}
 
-	w.WriteString("</head>\n<body>\n")
+	f.WriteString("</head>\n<body>\n")
 	for _, elem := range h.body {
-		w.WriteString(fmt.Sprintf("%s\n", elem.Html()))
+		_, err = f.WriteString(fmt.Sprintf("%s\n", elem.Html()))
+		errf(err)
 	}
 
-	w.WriteString("</body>\n</html>")
-	w.Flush()
+	_, err = f.WriteString("</body>\n</html>")
+	errf(err)
 }
 
 /*
