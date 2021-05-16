@@ -47,6 +47,8 @@ func (h *HTML) Render() {
 
 /*
 	Renders a stylesheet struct to a css file
+
+	Not yet implemented
 */
 func (*Stylesheet) Render() {
 	fmt.Println("Under Construction...")
