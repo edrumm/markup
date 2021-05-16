@@ -33,7 +33,9 @@ func (h *HTML) Render() {
 		errf(err)
 	}
 
-	f.WriteString("</head>\n<body>\n")
+	_, err = f.WriteString("</head>\n<body>\n")
+	errf(err)
+
 	for _, elem := range h.body {
 		_, err = f.WriteString(fmt.Sprintf("%s\n", elem.Html()))
 		errf(err)
