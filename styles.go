@@ -1,15 +1,26 @@
 package markup
 
-type Dec struct {
+import "strings"
+
+/*
+	Represents a CSS declaration
+*/
+type Declaration struct {
 	property string
 	value    string
 }
 
+/*
+	Represents a CSS ruleset
+*/
 type Rule struct {
 	selector     string
-	declarations []*Dec
+	declarations []*Declaration
 }
 
+/*
+	Represents a full Cascading Stylesheet file
+*/
 type Stylesheet struct {
 	name  string
 	rules []*Rule
@@ -18,6 +29,9 @@ type Stylesheet struct {
 	*/
 }
 
+/*
+	Creates new stylesheet
+*/
 func NewStylesheet(name string) *Stylesheet {
 	return &Stylesheet{name, nil}
 	/*
@@ -25,6 +39,9 @@ func NewStylesheet(name string) *Stylesheet {
 	*/
 }
 
+/*
+	Adds rule to current stylesheet
+*/
 func (css *Stylesheet) AddRule(selector string) *Rule {
 	/*
 		How to link this to Stylesheet...??
@@ -32,6 +49,22 @@ func (css *Stylesheet) AddRule(selector string) *Rule {
 	return &Rule{selector, nil}
 }
 
+/*
+	Adds a declaration to current rule
+*/
 func (r *Rule) AddDeclaration(prop, value string) {
-	r.declarations = append(r.declarations, &Dec{prop, value})
+	r.declarations = append(r.declarations, &Declaration{prop, value})
+}
+
+/*
+	Returns string of CSS syntax
+*/
+func (r *Rule) CSS() string {
+	sb := strings.Builder{}
+
+	/*
+		TODO
+	*/
+
+	return sb.String()
 }

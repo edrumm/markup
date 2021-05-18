@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-type Node interface {
+type Element interface {
 	Html() string
 }
 
@@ -26,10 +26,20 @@ type SingleTag struct {
 }
 
 /*
+	Represents HTML image (img) tag
+*/
+type Img struct {
+	src    string
+	width  int
+	height int
+	alt    string
+}
+
+/*
 	Represents html div element
 */
 type Div struct {
-	content []Node
+	content []Element
 	/*
 	   TODO
 	*/
@@ -43,8 +53,8 @@ type Div struct {
 type HTML struct {
 	name string
 	lang string
-	head []Node
-	body []Node
+	head []Element
+	body []Element
 
 	/*
 	   TODO
@@ -55,21 +65,21 @@ type HTML struct {
 	Create new HTML struct
 */
 func NewHtmlDoc(name, lang, title string) *HTML {
-	h := []Node{NewTag("title", title)}
+	h := []Element{NewTag("title", title)}
 	return &HTML{name, lang, h, nil}
 }
 
 /*
 	Append tag to HTML head
 */
-func (h *HTML) AppendHead(elem Node) {
+func (h *HTML) AppendHead(elem Element) {
 	h.head = append(h.head, elem)
 }
 
 /*
 	Append tag to HTML body
 */
-func (h *HTML) AppendBody(elem Node) {
+func (h *HTML) AppendBody(elem Element) {
 	h.body = append(h.body, elem)
 }
 
@@ -135,6 +145,31 @@ func (d *Div) Html() string {
 /*
 	Append tag to div
 */
-func (d *Div) AppendToDiv(n Node) {
+func (d *Div) AppendToDiv(n Element) {
 	d.content = append(d.content, n)
+}
+
+/*
+	Create new img element (no size specified)
+*/
+func NewImg(src, alt string) *Img {
+	return &Img{src, 0, 0, alt}
+}
+
+/*
+	Create new img element (with a specified size)
+*/
+func NewSizedImg(src, alt string, width, height int) *Img {
+	return &Img{src, width, height, alt}
+}
+
+/*
+	Return HTML syntax of img
+*/
+func (i *Img) Html() string {
+	if i.height == 0 && i.width == 0 {
+		return fmt.Sprintf(`<img src="%s" alt="%s">`, i.src, i.alt)
+	}
+
+	return fmt.Sprintf(`<img src="%s" alt="%s" width="%d" height="%d">`, i.src, i.alt, i.width, i.height)
 }
