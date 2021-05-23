@@ -13,7 +13,7 @@ type Element interface {
 	Represents a basic HTML tag
 	TODO: attributes
 */
-type Tag struct {
+type HtmlTag struct {
 	name    string
 	content string
 }
@@ -21,14 +21,14 @@ type Tag struct {
 /*
 	Represents a single tag e.g. br, hr, etc...
 */
-type SingleTag struct {
+type HtmlSingleTag struct {
 	name string
 }
 
 /*
 	Represents HTML image (img) tag
 */
-type Img struct {
+type HtmlImg struct {
 	src    string
 	width  int
 	height int
@@ -38,7 +38,7 @@ type Img struct {
 /*
 	Represents html div element
 */
-type Div struct {
+type HtmlDiv struct {
 	content []Element
 	/*
 	   TODO
@@ -64,22 +64,22 @@ type HTML struct {
 /*
 	Create new HTML struct
 */
-func NewHtmlDoc(name, lang, title string) *HTML {
-	h := []Element{NewTag("title", title)}
+func HtmlPage(name, lang, title string) *HTML {
+	h := []Element{Tag("title", title)}
 	return &HTML{name, lang, h, nil}
 }
 
 /*
 	Append tag to HTML head
 */
-func (h *HTML) AppendHead(elem Element) {
+func (h *HTML) Head(elem Element) {
 	h.head = append(h.head, elem)
 }
 
 /*
 	Append tag to HTML body
 */
-func (h *HTML) AppendBody(elem Element) {
+func (h *HTML) Body(elem Element) {
 	h.body = append(h.body, elem)
 }
 
@@ -93,14 +93,14 @@ func (h *HTML) Html() string {
 /*
 	Create new tag
 */
-func NewTag(name, content string) *Tag {
-	return &Tag{name, content}
+func Tag(name, content string) *HtmlTag {
+	return &HtmlTag{name, content}
 }
 
 /*
 	Return HTML syntax of tag
 */
-func (t *Tag) Html() string {
+func (t *HtmlTag) Html() string {
 	return fmt.Sprintf("<%s>%s</%s>", t.name, t.content, t.name)
 }
 
@@ -108,28 +108,28 @@ func (t *Tag) Html() string {
 	Create new single tag
 	eg. hr, br
 */
-func NewSingleTag(name string) *SingleTag {
-	return &SingleTag{name}
+func SingleTag(name string) *HtmlSingleTag {
+	return &HtmlSingleTag{name}
 }
 
 /*
 	Return HTML syntax of tag
 */
-func (t *SingleTag) Html() string {
+func (t *HtmlSingleTag) Html() string {
 	return fmt.Sprintf("<%s>", t.name)
 }
 
 /*
 	Create new div element
 */
-func NewDiv( /* ... */ ) *Div {
-	return &Div{nil /* ... */}
+func Div( /* ... */ ) *HtmlDiv {
+	return &HtmlDiv{nil /* ... */}
 }
 
 /*
 	Return HTML syntax of tag, including all nested div tags
 */
-func (d *Div) Html() string {
+func (d *HtmlDiv) Html() string {
 	sb := strings.Builder{}
 	sb.WriteString("<div>\n")
 
@@ -145,28 +145,28 @@ func (d *Div) Html() string {
 /*
 	Append tag to div
 */
-func (d *Div) AppendToDiv(n Element) {
+func (d *HtmlDiv) AppendToDiv(n Element) {
 	d.content = append(d.content, n)
 }
 
 /*
 	Create new img element (no size specified)
 */
-func NewImg(src, alt string) *Img {
-	return &Img{src, 0, 0, alt}
+func Img(src, alt string) *HtmlImg {
+	return &HtmlImg{src, 0, 0, alt}
 }
 
 /*
 	Create new img element (with a specified size)
 */
-func NewSizedImg(src, alt string, width, height int) *Img {
-	return &Img{src, width, height, alt}
+func ImgWithSize(src, alt string, width, height int) *HtmlImg {
+	return &HtmlImg{src, width, height, alt}
 }
 
 /*
 	Return HTML syntax of img
 */
-func (i *Img) Html() string {
+func (i *HtmlImg) Html() string {
 	if i.height == 0 && i.width == 0 {
 		return fmt.Sprintf(`<img src="%s" alt="%s">`, i.src, i.alt)
 	}
