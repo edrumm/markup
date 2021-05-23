@@ -15,8 +15,8 @@ func TestHTML_Render(t *testing.T) {
 	index.Body(ImgWithSize("1024px-Go_Logo_Blue.svg.png", "Go logo", 341, 128))
 
 	div := Div()
-	div.AppendToDiv(Tag("h2", "Div Header"))
-	div.AppendToDiv(Tag("p", "Some div text"))
+	div.Append(Tag("h2", "Div Header"))
+	div.Append(Tag("p", "Some div text"))
 
 	index.Body(div)
 	index.Render()
@@ -42,10 +42,10 @@ func TestTag_Html(t *testing.T) {
 
 func TestDiv_AppendToDiv(t *testing.T) {
 	d := Div()
-	d.AppendToDiv(Tag("p", "Example text"))
-	d.AppendToDiv(Tag("p", "More example text"))
+	d.Append(Tag("p", "Example text"))
+	d.Append(Tag("p", "More example text"))
 
-	assert.NotEmpty(t, d.content)
+	assert.NotEmpty(t, d.children)
 }
 
 func TestSingleTag_Html(t *testing.T) {
@@ -59,4 +59,9 @@ func TestSingleTag_Html(t *testing.T) {
 func TestImg_Html(t *testing.T) {
 	img := Img("myphoto.png", "An Image")
 	assert.Equal(t, img.Html(), `<img src="myphoto.png" alt="An Image">`)
+}
+
+func TestHtmlHyperlink_Html(t *testing.T) {
+	a := Hyperlink("https://github.com/", "GitHub")
+	assert.Equal(t, a.Html(), `<a href="https://github.com/">GitHub</a>`)
 }

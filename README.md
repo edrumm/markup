@@ -48,8 +48,8 @@ func main() {
 	div := markup.Div()
 	
 	// Add elements to div
-	div.AppendToDiv(markup.Tag("h2", "Div Header"))
-	div.AppendToDiv(markup.Tag("p", "Some div text"))
+	div.Append(markup.Tag("h2", "Div Header"))
+	div.Append(markup.Tag("p", "Some div text"))
 	
 	// Add div to HTML
 	index.Body(div)

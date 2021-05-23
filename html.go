@@ -26,6 +26,17 @@ type HtmlSingleTag struct {
 }
 
 /*
+	Represents an HTML hyperlink (a) tag
+*/
+type HtmlHyperlink struct {
+	href string
+	text string
+	/*
+		TODO - target attribute
+	*/
+}
+
+/*
 	Represents HTML image (img) tag
 */
 type HtmlImg struct {
@@ -39,7 +50,7 @@ type HtmlImg struct {
 	Represents html div element
 */
 type HtmlDiv struct {
-	content []Element
+	children []Element
 	/*
 	   TODO
 	*/
@@ -55,10 +66,6 @@ type HTML struct {
 	lang string
 	head []Element
 	body []Element
-
-	/*
-	   TODO
-	*/
 }
 
 /*
@@ -84,7 +91,7 @@ func (h *HTML) Body(elem Element) {
 }
 
 /*
-	Return HTML syntax of tag
+	Return HTML syntax of HTML tag
 */
 func (h *HTML) Html() string {
 	return fmt.Sprintf("<html lang=\"%s\">", h.lang)
@@ -120,20 +127,34 @@ func (t *HtmlSingleTag) Html() string {
 }
 
 /*
-	Create new div element
+	Create new a tag (hyperlink)
 */
-func Div( /* ... */ ) *HtmlDiv {
-	return &HtmlDiv{nil /* ... */}
+func Hyperlink(href, text string) *HtmlHyperlink {
+	return &HtmlHyperlink{href, text}
 }
 
 /*
-	Return HTML syntax of tag, including all nested div tags
+	Return HTML syntax of hyperlink
+*/
+func (a *HtmlHyperlink) Html() string {
+	return fmt.Sprintf(`<a href="%s">%s</a>`, a.href, a.text)
+}
+
+/*
+	Create new div element
+*/
+func Div() *HtmlDiv {
+	return &HtmlDiv{nil}
+}
+
+/*
+	Return HTML syntax of div, including all nested tags
 */
 func (d *HtmlDiv) Html() string {
 	sb := strings.Builder{}
 	sb.WriteString("<div>\n")
 
-	for _, elem := range d.content {
+	for _, elem := range d.children {
 		sb.WriteString(fmt.Sprintf("%s\n", elem.Html()))
 	}
 
@@ -145,8 +166,8 @@ func (d *HtmlDiv) Html() string {
 /*
 	Append tag to div
 */
-func (d *HtmlDiv) AppendToDiv(n Element) {
-	d.content = append(d.content, n)
+func (d *HtmlDiv) Append(n Element) {
+	d.children = append(d.children, n)
 }
 
 /*

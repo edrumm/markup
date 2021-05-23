@@ -43,10 +43,10 @@ func NewStylesheet(name string) *Stylesheet {
 	Adds rule to current stylesheet
 */
 func (css *Stylesheet) AddRule(selector string) *Rule {
-	/*
-		How to link this to Stylesheet...??
-	*/
-	return &Rule{selector, nil}
+	r := &Rule{selector, nil}
+	css.rules = append(css.rules, r)
+
+	return r
 }
 
 /*
