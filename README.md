@@ -22,12 +22,12 @@ import "github.com/edrumm/markup"
 
 func main() {
 	// Create an HTML file
-	index := markup.NewHtmlDoc("index.html", "en", "Markup Page")
+	index := markup.HtmlPage("index.html", "en", "Markup Page")
 	
 	// Add HTML elements
-	index.AppendBody(markup.NewTag("h1", "Auto Generated Page"))
-	index.AppendBody(markup.NewSingleTag("hr"))
-	index.AppendBody(markup.NewTag("p", "A page generated in Go using github.com/edrumm/markup"))
+	index.Body(markup.Tag("h1", "Auto Generated Page"))
+	index.Body(markup.SingleTag("hr"))
+	index.Body(markup.Tag("p", "A page generated in Go using github.com/edrumm/markup"))
     
 	// Render the HTML page to a file
 	index.Render()
@@ -42,17 +42,17 @@ import "github.com/edrumm/markup"
 
 func main() {
 	// Create an HTML file
-	index := markup.NewHtmlDoc("index.html", "en", "Markup Page")
+	index := markup.HtmlPage("index.html", "en", "Markup Page")
 	
 	// Create a new div
-	div := markup.NewDiv()
+	div := markup.Div()
 	
 	// Add elements to div
-	div.AppendToDiv(markup.NewTag("h2", "Div Header"))
-	div.AppendToDiv(markup.NewTag("p", "Some div text"))
+	div.AppendToDiv(markup.Tag("h2", "Div Header"))
+	div.AppendToDiv(markup.Tag("p", "Some div text"))
 	
 	// Add div to HTML
-	index.AppendBody(div)
+	index.Body(div)
     
 	// Render the HTML page to a file
 	index.Render()
@@ -61,5 +61,6 @@ func main() {
 
 ### Coming Soon
 - CSS stylesheets
-- Script, img, & other HTML tags
+- script, a, & other HTML tags
 - Nested tag support, eg. `<p><a>...</a></p>`
+- Variadic versions of `Head()` and `Body()`
