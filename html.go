@@ -15,7 +15,7 @@ type Element interface {
 */
 type HtmlTag struct {
 	name    string
-	content string
+	content []string
 }
 
 /*
@@ -100,7 +100,7 @@ func (h *HTML) Html() string {
 /*
 	Create new tag
 */
-func Tag(name, content string) *HtmlTag {
+func Tag(name string, content ...string) *HtmlTag {
 	return &HtmlTag{name, content}
 }
 
@@ -108,7 +108,21 @@ func Tag(name, content string) *HtmlTag {
 	Return HTML syntax of tag
 */
 func (t *HtmlTag) Html() string {
-	return fmt.Sprintf("<%s>%s</%s>", t.name, t.content, t.name)
+	if len(t.content) == 1 {
+		return fmt.Sprintf("<%s>%s</%s>", t.name, t.content[0], t.name)
+	}
+
+	sb := strings.Builder{}
+
+	sb.WriteString(fmt.Sprintf("<%s>\n", t.name))
+
+	for _, elem := range t.content {
+		sb.WriteString(fmt.Sprintf("%s\n", elem))
+	}
+
+	sb.WriteString(fmt.Sprintf("</%s>", t.name))
+
+	return sb.String()
 }
 
 /*
