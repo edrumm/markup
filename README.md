@@ -25,9 +25,11 @@ func main() {
 	index := markup.HtmlPage("index.html", "en", "Markup Page")
 	
 	// Add HTML elements
-	index.Body(markup.Tag("h1", "Auto Generated Page"))
-	index.Body(markup.SingleTag("hr"))
-	index.Body(markup.Tag("p", "A page generated in Go using github.com/edrumm/markup"))
+	index.Body(
+	    markup.Tag("h1", "Auto Generated Page"),
+	    markup.SingleTag("hr"),
+	    markup.Tag("p", "A page generated in Go using github.com/edrumm/markup"),
+    )
     
 	// Render the HTML page to a file
 	index.Render()
@@ -48,8 +50,10 @@ func main() {
 	div := markup.Div()
 	
 	// Add elements to div
-	div.Append(markup.Tag("h2", "Div Header"))
-	div.Append(markup.Tag("p", "Some div text"))
+	div.Content(
+	    markup.Tag("h2", "Div Header"),
+	    markup.Tag("p", "Some div text"),
+	)
 	
 	// Add div to HTML
 	index.Body(div)
@@ -62,5 +66,5 @@ func main() {
 ### Coming Soon
 - CSS stylesheets
 - script, a, & other HTML tags
-- Nested tag support, eg. `<p><a>...</a></p>`
-- Variadic versions of `Head()` and `Body()`
+- [x] Nested tag support, eg. `<p><a>...</a></p>`
+- [x] Variadic versions of `Head()` and `Body()`

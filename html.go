@@ -77,17 +77,17 @@ func HtmlPage(name, lang, title string) *HTML {
 }
 
 /*
-	Append tag to HTML head
+	Content tag to HTML head
 */
-func (h *HTML) Head(elem Element) {
-	h.head = append(h.head, elem)
+func (h *HTML) Head(elem ...Element) {
+	h.head = append(h.head, elem...)
 }
 
 /*
-	Append tag to HTML body
+	Content tag to HTML body
 */
-func (h *HTML) Body(elem Element) {
-	h.body = append(h.body, elem)
+func (h *HTML) Body(elem ...Element) {
+	h.body = append(h.body, elem...)
 }
 
 /*
@@ -178,10 +178,10 @@ func (d *HtmlDiv) Html() string {
 }
 
 /*
-	Append tag to div
+	Content tag to div
 */
-func (d *HtmlDiv) Append(n Element) {
-	d.children = append(d.children, n)
+func (d *HtmlDiv) Content(n ...Element) {
+	d.children = append(d.children, n...)
 }
 
 /*
@@ -207,4 +207,22 @@ func (i *HtmlImg) Html() string {
 	}
 
 	return fmt.Sprintf(`<img src="%s" alt="%s" width="%d" height="%d">`, i.src, i.alt, i.width, i.height)
+}
+
+/*
+	Add ID to tag
+*/
+func Id(e Element, id string) {
+	/*
+		TODO
+	*/
+}
+
+/*
+	Add class to tag
+*/
+func Class(e Element, class string) {
+	/*
+		TODO
+	*/
 }
