@@ -48,9 +48,19 @@ func (h *HTML) Render() {
 /*
 	Renders a stylesheet struct to a css file
 
-	Not yet implemented
+	Only partially implemented
 */
-func (*Stylesheet) Render() {
+func (s *Stylesheet) Render() {
+	f, err := os.Create(s.name)
+	errf(err)
+
+	defer func() {
+		err := f.Close()
+		if err != nil {
+			panic(err)
+		}
+	}()
+
 	fmt.Println("Under Construction...")
 
 	/*
